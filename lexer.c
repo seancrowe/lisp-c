@@ -22,7 +22,7 @@ int lex(const char *str, const char **start, const char **end) {
         // if they are not, then set the end address to mark the end of a token
         *end = str + 1;
     } else {
-        *end = str + strspn(str, delim);
+        *end = str + strcspn(str, delim);
     }
 
     return Error_OK;
