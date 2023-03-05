@@ -1,3 +1,5 @@
 #include "lisp.h"
 
-int lex(const) {}
+int lex(const) {
+
+}
