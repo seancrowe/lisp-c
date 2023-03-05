@@ -29,6 +29,7 @@ typedef struct Atom Atom;
 #define nilp(atom) ((atom).type == AtomType_Nil)
 
 static const Atom nil = { AtomType_Nil };
+static Atom sym_table = { AtomType_Nil };
 
 // Create pair atom on the heap; will leak memory at the moment
 Atom cons(Atom car_val, Atom cdr_val) {
@@ -53,10 +54,24 @@ Atom create_int(long x) {
 }
 
 // Create a symbol atom
-Atom create_symbol(const char *name) {
-    Atom a;
+Atom create_sym(const char *name) {
+    Atom a, p;
+
+    // Check to see if symbol exsits on the symbol table, if it does then return it
+    p = sym_table;
+    while (!nilp(p)) {
+        a = car(p);
+        if (strcmp(a.value.symbol, name) == 0)
+            //printf("Returning symbol from table!\n");
+            return a;
+        p = cdr(p);
+    }
+
+    // Symbol does not exist, so we will create one and add it to the symbol table
     a.type = AtomType_Symbol;
     a.value.symbol = strdup(name);
+    sym_table = cons(a, sym_table);
+
     return a;
 }
 
@@ -97,9 +112,11 @@ void print_expr(Atom atom) {
 void initial_test() {
     print_expr(create_int(42));
     printf("\n");
-    print_expr(create_symbol("SYM"));
+    print_expr(create_sym("SYM"));
     printf("\n");
-    print_expr(cons(create_symbol("AGE"), create_int(23)));
+    print_expr(create_sym("SYM"));
+    printf("\n");
+    print_expr(cons(create_sym("AGE"), create_int(23)));
     printf("\n");
 
     Atom list = cons(create_int(1), cons(create_int(2), cons(create_int(3), nil)));
