@@ -1,6 +1,6 @@
 #include "lisp.h"
-#include "parser.c"
 #include <stdio.h>
+#include <stdlib.h>
 
 
 #define MAX_BUFFER 128
@@ -27,7 +27,6 @@ int main(int argc, char **argv) {
 
         switch(err) {
             case Error_OK:
-                printf("Ok expression\n");
                 print_expr(expr);
                 putchar('\n');
                 break;

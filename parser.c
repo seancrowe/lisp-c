@@ -1,9 +1,9 @@
 #include "lisp.h"
-#include "core.c"
-#include "lexer.c"
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+
+int read_expr(const char *input, const char **end, Atom *result);
 
 int parse_simple(const char *start, const char *end, Atom *result) {
     char *buf, *p;
@@ -34,8 +34,6 @@ int parse_simple(const char *start, const char *end, Atom *result) {
     free(buf);
     return Error_OK;
 }
-
-int read_expr(const char *input, const char **end, Atom *result);
 
 int read_list(const char *start, const char **end, Atom *result) {
     Atom p;

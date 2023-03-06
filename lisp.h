@@ -35,4 +35,18 @@ typedef struct Atom Atom;
 static const Atom nil = { AtomType_Nil };
 static Atom sym_table = { AtomType_Nil };
 
+/* Data */
+Atom cons(Atom car_val, Atom cdr_val);
+Atom create_int(long x);
+Atom create_sym(const char *name);
+
+/* Lexer */
+int lex(const char *str, const char **start, const char **end);
+
+/* Parser */
+int read_expr(const char *input, const char **end, Atom *result);
+
+/* Printer */
+void print_expr(Atom atom);
+
 #endif // LISP_H_
