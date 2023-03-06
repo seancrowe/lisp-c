@@ -22,7 +22,10 @@ struct Pair {
 
 typedef enum {
     Error_OK = 0,
-    Error_Syntax
+    Error_Syntax,
+    Error_Unbound,
+    Error_Args,
+    Error_Type
 } Error;
 
 typedef struct Atom Atom;
@@ -35,10 +38,17 @@ typedef struct Atom Atom;
 static const Atom nil = { AtomType_Nil };
 static Atom sym_table = { AtomType_Nil };
 
+/* Eval */
+Atom env_create(Atom parent);
+int env_get(Atom env, Atom symbol, Atom *result);
+int env_set(Atom env, Atom symbol, Atom value);
+int eval_expr(Atom expr, Atom env, Atom *result);
+
 /* Data */
 Atom cons(Atom car_val, Atom cdr_val);
 Atom create_int(long x);
 Atom create_sym(const char *name);
+int listp(Atom expr);
 
 /* Lexer */
 int lex(const char *str, const char **start, const char **end);

@@ -41,8 +41,19 @@ Atom create_sym(const char *name) {
 
     // Symbol does not exist, so we will create one and add it to the symbol table
     a.type = AtomType_Symbol;
-    a.value.symbol = strdup(name);
+    a.value.symbol = _strdup(name);
     sym_table = cons(a, sym_table);
 
     return a;
+}
+
+// Check if expression is a list
+int listp(Atom expr) {
+    while (!nilp(expr)) {
+        if(expr.type != AtomType_Pair) {
+            return 0;
+        }
+        expr = cdr(expr);
+    }
+    return 1;
 }
