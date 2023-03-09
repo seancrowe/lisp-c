@@ -70,8 +70,14 @@ int env_set(Atom env, Atom symbol, Atom value) {
     return Error_OK;
 }
 
+int apply(Atom fn, Atom args, Atom *result) {
+    if (fn.type == AtomType_Builtin) {
+        return (*fn.value.builtin)(args, result);
+    }
+    return Error_Type;
+}
 int eval_expr(Atom expr, Atom env, Atom *result) {
-    Atom op, args;
+    Atom op, args, p;
     Error err;
 
     // If expression is a symbol, return the lookup for it
@@ -125,5 +131,23 @@ int eval_expr(Atom expr, Atom env, Atom *result) {
 
         }
     }
-    return Error_Syntax;
+
+    // Evaluate operator
+    err = eval_expr(op, env, &op);
+    if (err) {
+        return err;
+    }
+
+    // Evaluate arguments
+    args = copy_list(args);
+    p = args;
+    while(!nilp(p)) {
+        err = eval_expr(car(p), env, &car(p));
+        if (err) {
+            return err;
+        }
+        p = cdr(p);
+    }
+
+    return apply(op, args, result);
 }

@@ -13,6 +13,11 @@ int main(int argc, char **argv) {
     // Create the global environment
     env = env_create(nil);
 
+    // Set the initial environment
+    env_set(env, create_sym("CAR"), create_builtin(builtin_car));
+    env_set(env, create_sym("CDR"), create_builtin(builtin_cdr));
+    env_set(env, create_sym("CONS"), create_builtin(builtin_cons));
+
     for (;;) {
 
         char *input = malloc(MAX_BUFFER);
@@ -53,4 +58,5 @@ int main(int argc, char **argv) {
         }
        free(input);
     }
+    return 0;
 }

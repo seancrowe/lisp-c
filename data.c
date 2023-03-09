@@ -47,6 +47,13 @@ Atom create_sym(const char *name) {
     return a;
 }
 
+Atom create_builtin(Builtin fn) {
+    Atom a;
+    a.type = AtomType_Builtin;
+    a.value.builtin = fn;
+    return a;
+}
+
 // Check if expression is a list
 int listp(Atom expr) {
     while (!nilp(expr)) {
@@ -56,4 +63,24 @@ int listp(Atom expr) {
         expr = cdr(expr);
     }
     return 1;
+}
+
+Atom copy_list(Atom list) {
+    Atom a, p;
+
+    if (nilp(list)){
+        return nil;
+    }
+
+    a = cons(car(list), nil);
+    p = a;
+    list = cdr(list);
+
+    while (!nilp(list)) {
+        cdr(p) = cons(car(list), nil);
+        p = cdr(p);
+        list = cdr(list);
+    }
+
+    return a;
 }

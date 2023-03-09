@@ -31,5 +31,8 @@ void print_expr(Atom atom) {
         case AtomType_Integer:
             printf("%ld", atom.value.integer);
             break;
+        case AtomType_Builtin:
+            printf("#<BUILTIN:%p>", atom.value.builtin);
+            break;
     }
 }
