@@ -1,7 +1,7 @@
 # LISP-C
 ### WIP
 
-This is a LISP implementation written in pure C. I began this project following some guidance online in an attempt to develop a deeper understanding of LISP.
+This is a LISP implementation written in pure C. I began this project in an attempt to develop a deeper understanding of LISP and the workings of programming languages in general. I believe a LISP implementation is the easiest first step.
 
 I am still learning C, one area I am largely lacking in is tooling (although I get the feeling all C/C++ developers are). Therefore, this project does not use a build system at the moment. I am simply building from source with GCC.
 ```
