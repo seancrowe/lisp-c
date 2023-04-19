@@ -1,6 +1,8 @@
 #ifndef LISP_H_
 #define LISP_H_
 
+// DO THIS IN JAVA!!!!!!!!!!!!!!
+
 struct Atom;
 
 typedef int (*Builtin)(struct Atom args, struct Atom *result);
